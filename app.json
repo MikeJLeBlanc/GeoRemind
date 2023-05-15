@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1238a4fb-d608-49d2-b2d0-e660d2621673"
+      }
+    },
+    "owner": "vorsacion"
   }
 }
