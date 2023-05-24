@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
+import List from '../components/List';
+import TaskItems from './TaskItems';
 
-import List from './components/List';
-
-function TaskScreen() {
-  const navigation = useNavigation();
-
+function TaskScreen(navigation) {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
 
@@ -15,15 +12,15 @@ function TaskScreen() {
     Keyboard.dismiss();
     setTaskItems([...taskItems, task])
     setTask(null);
-    if (newListName) {
-      const newList = { name: newListName };
-      setLists([...lists, newList]);
-      setNewListName(newListName);
+    if (newTaskName) {
+      const newTask = { name: newTaskName };
+      setTask([...task, newTask]);
+      setTaskItems(newTaskName);
       try {
-        const storedLists = await AsyncStorage.getItem('lists');
+        const storedLists = await AsyncStorage.getItem('tasks');
         const parsedLists = storedLists ? JSON.parse(storedLists) : [];
         const updatedLists = [...parsedLists, newList];
-        await AsyncStorage.setItem('lists', JSON.stringify(updatedLists));
+        await AsyncStorage.setItem('tasks', JSON.stringify(updatedLists));
       } catch (error) {
         console.log(error);
       }
@@ -33,15 +30,16 @@ function TaskScreen() {
   const completeTask = (index) => {
     let itemsCopy = [...taskItems];
     itemsCopy.splice(index, 1);
-    setTaskItems(itemsCopy)
+    setTaskItems(itemsCopy);
+    AsyncStorage.removeItem(index);
   }
 
   React.useEffect(() => {
     const loadTasks = async () => {
       try {
-        const storedLists = await AsyncStorage.getItem('lists');
-        if (storedLists) {
-          setTaskItems(JSON.parse(storedLists));
+        const storedTasks = await AsyncStorage.getItem('tasks');
+        if (storedTasks) {
+          setTaskItems(JSON.parse(storedTasks));
         }
       } catch (error) {
         console.log(error);
@@ -68,7 +66,7 @@ function TaskScreen() {
           {
             taskItems.map((item, index) => {
               return (
-                <TouchableOpacity key={index}  onPress={() => navigation.navigate('ItemListScreen', {name: item})} onLongPress={() => completeTask(index)}>
+                <TouchableOpacity key={index}  onPress={() => navigation.navigate('TaskItems', props)} onLongPress={() => completeTask(index)}>
                   <List text={item} /> 
                 </TouchableOpacity>
               )
