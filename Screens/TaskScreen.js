@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView } from 'react-native';
 import { AsyncStorage } from '@react-native-async-storage/async-storage';
 import List from '../components/List';
-import TaskItems from './TaskItems';
 
 function TaskScreen(navigation) {
   const [task, setTask] = useState();
