@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import { React, useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet } from 'react-native';
 
 const TaskItems = ({ navigation, route }) => {  
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState('');
+  // const xCoordinate;
+  // const yCoordinate;
 
   const addNewItem = () => {
     if (newItem) {
       setItems([...items, newItem]);
       setNewItem('');
     }    
+  };
+
+  const handleLocationPin = () => {
+    const setXCoordinate = worldMap.Pin.getX();
+    const setYCoordinate = WorldMap.Pin.getY();
+  };
+
+  const notificationCheck = () => {
+    cp
   };
 
   return (
@@ -27,6 +38,7 @@ const TaskItems = ({ navigation, route }) => {
         renderItem={({ item }) => <Text>{item}</Text>}
         keyExtractor={(item, index) => index.toString()}
       />
+      {/* <Button title='Set Location' onPress /> */}
       <Button title="Done" onPress={() => navigation.pop()} />
     </View>
   );

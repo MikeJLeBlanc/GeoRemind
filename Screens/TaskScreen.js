@@ -60,7 +60,7 @@ function TaskScreen(navigation) {
         {/* Today's Tasks */}
         <View style={styles.tasksWrapper}>
           <View style={styles.items}>
-            {/* This is where the tasks will stack longpress to delete list, press to enter | eventually set task location and be notified when within distance */}
+            {/* This is where the tasks will stack. longpress to delete list, shortpress to enter */}
             {
               taskItems.map((item, index) => {
                 return (
